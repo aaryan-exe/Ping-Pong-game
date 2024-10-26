@@ -17,6 +17,12 @@ bg_image=Image.open("Background.png")
 bg_photo = ImageTk.PhotoImage(bg_image)
 canvas.create_image(0, 0, image=bg_photo, anchor="nw")
 
+ball_image= Image.open("custom_ball.png")
+ball_photo=ImageTk.PhotoImage(ball_image)
+ball=canvas.create_image(Width/2, Height/2, image=ball_photo)
+
+left_paddle= canvas.create_rectangle(10, Height/2-PaddleHeight/2, 30, Height/2 + PaddleHeight/2, fill='White')
+
 root.mainloop()
 
 
