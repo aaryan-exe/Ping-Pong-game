@@ -8,7 +8,7 @@ root.title("Pong Game")
 # Define game settings
 WIDTH, HEIGHT = 600, 400
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
-BALL_SIZE = 100
+BALL_SIZE = 20
 PADDLE_SPEED = 20
 BALL_SPEED_X, BALL_SPEED_Y = 3, 3
 
