@@ -1,5 +1,6 @@
 import tkinter as tk
-from PIL import Image, ImageTk 
+import random
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 root.title("Pong Game")
@@ -13,12 +14,12 @@ BALL_SPEED_X, BALL_SPEED_Y = 3, 3
 canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
 canvas.pack()
 
-bg_image = Image.open("background.png")
+bg_image = Image.open("C:/Users/aryan/OneDrive/Documents/GitHub/Ping-Pong-game/Background.png")
 bg_image = bg_image.resize((WIDTH, HEIGHT), Image.LANCZOS)
 bg_photo = ImageTk.PhotoImage(bg_image)
 canvas.create_image(0, 0, image=bg_photo, anchor="nw")
 
-ball_image = Image.open("custom_ball.png")
+ball_image = Image.open("C:/Users/aryan/OneDrive/Documents/GitHub/Ping-Pong-game/custom_ball.png")
 ball_image = ball_image.resize((BALL_SIZE, BALL_SIZE), Image.LANCZOS)
 ball_photo = ImageTk.PhotoImage(ball_image)
 ball = canvas.create_image(WIDTH / 2, HEIGHT / 2, image=ball_photo)
@@ -43,6 +44,20 @@ def update_score():
 def move_paddle():
     canvas.move(left_paddle, 0, left_paddle_dy)
     canvas.move(right_paddle, 0, right_paddle_dy)
+
+    left_paddle_pos = canvas.coords(left_paddle)
+    right_paddle_pos = canvas.coords(right_paddle)
+
+    if left_paddle_pos[1] < 0:
+        canvas.move(left_paddle, 0, -left_paddle_pos[1])
+    elif left_paddle_pos[3] > HEIGHT:
+        canvas.move(left_paddle, 0, HEIGHT - left_paddle_pos[3])
+
+    if right_paddle_pos[1] < 0:
+        canvas.move(right_paddle, 0, -right_paddle_pos[1])
+    elif right_paddle_pos[3] > HEIGHT:
+        canvas.move(right_paddle, 0, HEIGHT - right_paddle_pos[3])
+
     root.after(20, move_paddle)
 
 def move_ball():
@@ -81,7 +96,7 @@ def move_ball():
 def reset_ball():
     canvas.coords(ball, WIDTH / 2, HEIGHT / 2)
     global ball_dx, ball_dy
-    ball_dx, ball_dy = BALL_SPEED_X, BALL_SPEED_Y
+    ball_dx, ball_dy = BALL_SPEED_X * (-1 if random.choice([True, False]) else 1), BALL_SPEED_Y
 
 def key_press(event):
     global left_paddle_dy, right_paddle_dy
